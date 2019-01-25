@@ -1,7 +1,7 @@
 [![CircleCI](https://circleci.com/gh/pranayairan/Coiny.svg?style=svg)](https://circleci.com/gh/pranayairan/Coiny)
 
 # Coiny
-Coiny is a beautiful cryptocurreny app, completely opensourced and 100% in kotlin. It supports following features
+Coiny is a beautiful cryptocurrency app, completely open source and 100% in kotlin. It supports following features
 
 * Track prices of over 3000+ currencies over 100+ exchanges
 * Get top coins, top pairs, top exchanges by volume. 
