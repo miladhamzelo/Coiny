@@ -3,7 +3,7 @@
 # Coiny
 Coiny is a beautiful cryptocurrency app, completely open source and 100% in kotlin. It supports following features
 
-* Track prices of over 3000+ currencies over 100+ exchanges
+* Track prices of over 4000+ currencies over 100+ exchanges
 * Get top coins, top pairs, top exchanges by volume. 
 * Track latest news for all the coins and crypto community in general
 * Completely secure, your data never leaves your device. 
