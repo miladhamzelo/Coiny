@@ -5,34 +5,45 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.binarybricks.coiny.components.DashboardCoinModule
+import com.binarybricks.coiny.components.ModuleItem
+import com.binarybricks.coiny.utils.ResourceProvider
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegate
-
+import kotlinx.android.extensions.LayoutContainer
 
 /**
  * Created by Pranay Airan
  * Adapter delegate that takes care of coin row in dashboard.
  */
 
-class DashboardCoinAdapterDelegate(private val toCurrency: String) : AdapterDelegate<List<Any>>() {
+class DashboardCoinAdapterDelegate(
+    private val toCurrency: String,
+    private val resourceProvider: ResourceProvider
+) : AdapterDelegate<List<ModuleItem>>() {
 
-    override fun isForViewType(items: List<Any>, position: Int): Boolean {
+    private val dashboardCoinModule by lazy {
+        DashboardCoinModule(toCurrency, resourceProvider)
+    }
+
+    override fun isForViewType(items: List<ModuleItem>, position: Int): Boolean {
         return items[position] is DashboardCoinModule.DashboardCoinModuleData
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val dashboardCoinModule = DashboardCoinModule(toCurrency)
         val dashboardCoinModuleView = dashboardCoinModule.init(LayoutInflater.from(parent.context), parent)
         return DashboardCoinViewHolder(dashboardCoinModuleView, dashboardCoinModule)
     }
 
-    override fun onBindViewHolder(items: List<Any>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
+    override fun onBindViewHolder(items: List<ModuleItem>, position: Int, holder: RecyclerView.ViewHolder, payloads: List<Any>) {
         val aboutCoinViewHolder = holder as DashboardCoinViewHolder
-        aboutCoinViewHolder.showCoinInfo(items[position] as DashboardCoinModule.DashboardCoinModuleData)
+        aboutCoinViewHolder.showCoinInfo(items[position] as DashboardCoinModule.DashboardCoinModuleData, position)
     }
 
-    class DashboardCoinViewHolder(itemView: View, private val dashboardCoinModule: DashboardCoinModule) : RecyclerView.ViewHolder(itemView) {
-        fun showCoinInfo(dashboardCoinModuleData: DashboardCoinModule.DashboardCoinModuleData) {
-            dashboardCoinModule.showCoinInfo(itemView, dashboardCoinModuleData)
+    class DashboardCoinViewHolder(override val containerView: View, private val dashboardCoinModule: DashboardCoinModule)
+        : RecyclerView.ViewHolder(containerView), LayoutContainer {
+        fun showCoinInfo(dashboardCoinModuleData: DashboardCoinModule.DashboardCoinModuleData, position: Int) {
+            // since in order of adding the cards we add the coin modules after top and news we are checking for position 2
+            // in future if this order changes or we add new things, we need to change this.
+            dashboardCoinModule.showCoinInfo(itemView, dashboardCoinModuleData, position == 2)
         }
     }
 }

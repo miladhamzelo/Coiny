@@ -1,6 +1,8 @@
 package com.binarybricks.coiny.stories
 
-
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleObserver
+import android.arch.lifecycle.OnLifecycleEvent
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -8,7 +10,7 @@ import io.reactivex.disposables.CompositeDisposable
  * view, as well as the strings resolution class.
  */
 
-open class BasePresenter<V : BaseView> {
+open class BasePresenter<V : BaseView> : LifecycleObserver {
 
     protected var currentView: V? = null
 
@@ -19,7 +21,6 @@ open class BasePresenter<V : BaseView> {
     protected val compositeDisposable: CompositeDisposable by lazy {
         CompositeDisposable()
     }
-
 
     /**
      * Check if the view is attached.
@@ -37,9 +38,14 @@ open class BasePresenter<V : BaseView> {
         currentView = view
     }
 
-
     fun detachView() {
         compositeDisposable.dispose()
         currentView = null
+    }
+
+    // cleanup
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun cleanYourSelf() {
+        detachView()
     }
 }

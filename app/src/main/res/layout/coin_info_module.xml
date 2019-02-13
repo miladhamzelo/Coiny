@@ -5,46 +5,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/generic8dp"
-    android:layout_marginStart="@dimen/generic8dp"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/generic16dp">
+    android:layout_marginStart="@dimen/generic14dp"
+    android:layout_marginTop="@dimen/generic16dp"
+    android:layout_marginEnd="@dimen/generic14dp"
+    android:orientation="vertical">
 
     <TextView
-        style="@style/TextRegularSecondary"
+        style="@style/CoinyText.Body1Alternate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/generic8dp"
         android:text="@string/coin_info"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.v7.widget.CardView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/generic12dp"
-        app:cardBackgroundColor="@color/backgroundColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/generic16dp">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/generic14dp"
+        android:background="@drawable/background_rounded_all"
+        android:padding="@dimen/generic14dp">
 
             <TextView
                 android:id="@+id/tvExchangeLabel"
-                style="@style/TextSmallSecondary"
+                style="@style/CoinyText.TitleAlternate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/generic4dp"
                 android:text="@string/exchange"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvAlgorithmLabel"
-                style="@style/TextSmallSecondary"
+                style="@style/CoinyText.TitleAlternate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/generic16dp"
@@ -54,7 +46,7 @@
 
             <TextView
                 android:id="@+id/tvProofTypeLabel"
-                style="@style/TextSmallSecondary"
+                style="@style/CoinyText.TitleAlternate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/generic16dp"
@@ -71,8 +63,8 @@
                 app:layout_constraintGuide_percent="0.5" />
 
             <TextView
-                android:id="@+id/tvExchangeName"
-                style="@style/TextRegular"
+                android:id="@+id/tvFirstTxnTimeAndExchange"
+                style="@style/CoinyText.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/tvExchangeLabel"
@@ -82,7 +74,7 @@
 
             <TextView
                 android:id="@+id/tvAlgorithmName"
-                style="@style/TextRegular"
+                style="@style/CoinyText.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/tvAlgorithmLabel"
@@ -92,7 +84,7 @@
 
             <TextView
                 android:id="@+id/tvProofTypeName"
-                style="@style/TextRegular"
+                style="@style/CoinyText.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@+id/tvProofTypeLabel"
@@ -101,6 +93,4 @@
                 tools:text="PoW" />
 
         </android.support.constraint.ConstraintLayout>
-    </android.support.v7.widget.CardView>
-
 </LinearLayout>

@@ -7,7 +7,9 @@ import com.binarybricks.coiny.R
 import com.binarybricks.coiny.data.PreferenceHelper
 import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.utils.Formatters
+import com.binarybricks.coiny.utils.ResourceProvider
 import kotlinx.android.synthetic.main.coin_statistic_module.view.*
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -16,18 +18,19 @@ import java.util.*
  * Simple class that wraps all logic related to Coin stats
  */
 
-class CoinStatsticsModule {
+class CoinStatsticsModule(private val resourceProvider: ResourceProvider) : Module() {
 
     private val formatter by lazy {
-        Formatters()
+        Formatters(resourceProvider)
     }
 
-    fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
+    override fun init(layoutInflater: LayoutInflater, parent: ViewGroup?): View {
         return layoutInflater.inflate(R.layout.coin_statistic_module, parent, false)
     }
 
-    fun showCoinStats(inflatedView: View, coinPrice: CoinPrice) {
+    fun showCoinStats(inflatedView: View, coinStatisticsModuleData: CoinStatisticsModuleData) {
         val currency = Currency.getInstance(PreferenceHelper.getDefaultCurrency(inflatedView.context))
+        val coinPrice = coinStatisticsModuleData.coinPrice
 
         inflatedView.tvOpenAmount.text = formatter.formatAmount(coinPrice.openDay
                 ?: "0", currency, true)
@@ -46,9 +49,13 @@ class CoinStatsticsModule {
         inflatedView.tvAvgMarketCapAmount.text = formatter.formatAmount(coinPrice.marketCap
                 ?: "0", currency, false)
 
-        inflatedView.tvSupplyNumber.text = "${formatter.formatNumber(coinPrice.supply
-                ?: 0)} ${coinPrice.fromSymbol}"
+        inflatedView.tvSupplyNumber.text = resourceProvider.getString(R.string.twoTextWithSpace,
+                formatter.formatNumber(coinPrice.supply ?: 0) ?: "", coinPrice.fromSymbol ?: "")
     }
 
-    data class CoinStatsticsModuleData(val coinPrice: CoinPrice)
+    override fun cleanUp() {
+        Timber.d("Clean up coinSymbol stats module")
+    }
+
+    data class CoinStatisticsModuleData(val coinPrice: CoinPrice) : ModuleItem
 }

@@ -1,10 +1,11 @@
 package com.binarybricks.coiny.network.models
 
 import com.binarybricks.coiny.data.database.entities.Coin
+import com.binarybricks.coiny.data.database.entities.WatchedCoin
 import com.google.gson.annotations.SerializedName
 
 /**
- Created by Pranay Airan 1/15/18.
+Created by Pranay Airan 1/15/18.
  *
  * Network object representing Coin from crypto compare
  */
@@ -38,12 +39,20 @@ data class CCCoin(
 
     @field:SerializedName("SortOrder") val sortOrder: String = "",
 
-    @field:SerializedName("Sponsored") val sponsored: Boolean = false)
+    @field:SerializedName("Sponsored") val sponsored: Boolean = false,
 
-fun getCoinFromCCCoin(ccCoin: CCCoin): Coin {
+    @field:SerializedName("IsTrading") val isTrading: Boolean = false
+)
 
-    return Coin(ccCoin.id, ccCoin.url, ccCoin.imageUrl, ccCoin.name, ccCoin.symbol, ccCoin.coinName,
-        ccCoin.fullName, ccCoin.algorithm, ccCoin.proofType, ccCoin.fullyPremined,
-        ccCoin.totalCoinSupply, ccCoin.preMinedValue, ccCoin.totalCoinsFreeFloat, ccCoin.sortOrder,
-        ccCoin.sponsored, false)
+data class CoinInfoWithCurrency(val currencyName: String, val info: CoinInfo)
+data class CoinInfo(val desc: String, val web: String?, val twt: String?, val reddit: String?, val forum: String?, val github: String?)
+
+fun getCoinFromCCCoin(ccCoin: CCCoin, defaultExchange: String, defaultCurrency: String, coinInfo: CoinInfo?): WatchedCoin {
+
+    val coin = Coin(ccCoin.id, ccCoin.url, ccCoin.imageUrl, ccCoin.name, ccCoin.symbol, ccCoin.coinName,
+            ccCoin.fullName, ccCoin.algorithm, ccCoin.proofType, ccCoin.fullyPremined,
+            ccCoin.totalCoinSupply, ccCoin.preMinedValue, ccCoin.totalCoinsFreeFloat, ccCoin.sortOrder.toInt(),
+            ccCoin.sponsored, ccCoin.isTrading, coinInfo?.desc, coinInfo?.twt, coinInfo?.web, coinInfo?.reddit, coinInfo?.forum, coinInfo?.github)
+
+    return WatchedCoin(coin, defaultExchange, defaultCurrency)
 }

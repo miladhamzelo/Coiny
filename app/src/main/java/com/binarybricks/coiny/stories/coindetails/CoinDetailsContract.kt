@@ -1,5 +1,4 @@
 import com.binarybricks.coiny.data.database.entities.WatchedCoin
-import com.binarybricks.coiny.network.models.CoinPrice
 import com.binarybricks.coiny.stories.BaseView
 
 /**
@@ -10,10 +9,10 @@ interface CoinDetailsContract {
 
     interface View : BaseView {
         fun showOrHideLoadingIndicator(showLoading: Boolean = true)
-        fun onCoinPriceLoaded(coinPrice: CoinPrice?, watchedCoin: WatchedCoin)
+        fun onWatchedCoinLoaded(coin: WatchedCoin?)
     }
 
     interface Presenter {
-        fun loadCurrentCoinPrice(watchedCoin: WatchedCoin, toCurrency: String)
+        fun getWatchedCoinFromSymbol(symbol: String)
     }
 }
